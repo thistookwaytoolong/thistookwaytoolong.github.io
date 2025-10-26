@@ -5,34 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Web Archive Replay</title>
     <style>
-      /* This makes the archive player fill the entire screen */
-      body,
-      html {
-        margin: 0;
-        padding: 0;
-        height: 100%;
-        overflow: hidden;
-      }
-      replay-web-page {
-        display: block;
-        width: 100%;
-        height: 100vh; /* 100% of the viewport height */
-      }
+      body, html { margin: 0; padding: 0; height: 100%; overflow: hidden; }
+      replay-web-page { display: block; width: 100%; height: 100vh; }
     </style>
   </head>
   <body>
-    <!-- 
-      =================================================================
-      IMPORTANT:
-      Change "YOUR-FILE-NAME.wacz" to the exact name of your WACZ file.
-      =================================================================
-    -->
-    <replay-web-page source="freeze-nova-cloud.wacz"></replay-web-page>
+    
+    <replay-web-page 
+      source="https://github.com/thistookwaytoolong/thistookwaytoolong.github.io/releases/download/bob/freeze-nova-cloud.wacz">
+    </replay-web-page>
 
-    <!-- This script loads the magic "player" from ReplayWeb.page -->
-    <script
-      async
-      src="https://cdn.jsdelivr.net/npm/replaywebpage@2.3.20/ui.js"
-    ></script>
+    <script async src="ui.js"></script>
   </body>
 </html>
