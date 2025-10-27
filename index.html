@@ -10,11 +10,17 @@
     </style>
   </head>
   <body>
-    
-    <replay-web-page 
-      source="/freeze-nova-cloud.wacz">
+    <!--
+      IMPORTANT: Replace "YOUR_GITHUB_RELEASE_WACZ_URL_HERE" below with the
+      URL you copied from your GitHub Release asset for 'freeze-nova-cloud.wacz'.
+    -->
+    <replay-web-page
+      source="https://github.com/thistookwaytoolong/thistookwaytoolong.github.io/releases/download/bob/freeze-nova-cloud.wacz">
+      <!-- Example: source="https://github.com/thistookwaytoolong/thistookwaytoolong.github.io/releases/download/v1.0-wacz/freeze-nova-cloud.wacz" -->
     </replay-web-page>
 
+    <!-- This assumes ui.js is in the same directory as index.html -->
     <script async src="ui.js"></script>
   </body>
 </html>
+
