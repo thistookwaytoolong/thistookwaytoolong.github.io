@@ -8,7 +8,7 @@
     <!-- 1. Load Tailwind CSS for styling -->
     <script src="https://cdn.tailwindcss.com"></script>
     
-    <!-- 2. Load the ReplayWeb.page UI library -->
+    <!-- 2. Load the local ReplayWeb.page UI library -->
     <!-- This script defines the <replay-web-page> custom HTML element -->
     <script type="module" src="./ui.js"></script>
 
@@ -28,48 +28,26 @@
         
         <!-- 
           3. The ReplayWeb.page custom element.
-          We remove the 'source' attribute to prevent auto-loading
-          with a relative path, which caused the error.
-          We add an 'id' so we can target it with JavaScript.
+          - We set 'source' to the relative path of the wacz file.
+          - We add 'sw-name' to explicitly point to the service worker,
+            which should fix the 404 error.
         -->
         <replay-web-page 
             id="replay-ui"
+            source="./freeze-nova-cloud.wacz"
+            sw-name="./replay/sw.js"
             class="h-full w-full">
         </replay-web-page>
 
     </main>
 
     <!-- 
-      4. Add JavaScript to fix the "Invalid URL" error.
-      We manually resolve the relative path to a full, absolute URL
-      before giving it to the component.
+      4. Removed the previous custom script.
+      The 'source' and 'sw-name' attributes are now set directly on
+      the <replay-web-page> element, which is the standard way
+      to configure it.
     -->
-    <script type="module">
-      try {
-        const replayElement = document.getElementById('replay-ui');
-        
-        // The relative path to the WACZ file
-        const relativePath = "/freeze-nova-cloud.wacz";
-
-        // Construct a full, absolute URL based on the document's location
-        // This fixes the "TypeError: Invalid URL"
-        const absoluteUrl = new URL(relativePath, window.location.href).href;
-
-        // Set the 'source' *property* of the element.
-        // The component will now load using the valid absolute URL.
-        replayElement.source = absoluteUrl;
-
-      } catch (e) {
-        console.error("Error setting up replayer:", e);
-        // Display a fallback error to the user
-        const replayElement = document.getElementById('replay-ui');
-        if (replayElement) {
-            replayElement.innerHTML = `<div class="p-4 text-red-400">Error: Could not construct URL for archive. ${e.message}</div>`;
-        }
-      }
-    </script>
 
 </body>
 </html>
-
 
