@@ -1,26 +1,74 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Web Archive Replay</title>
-    <style>
-      body, html { margin: 0; padding: 0; height: 100%; overflow: hidden; }
-      replay-web-page { display: block; width: 100%; height: 100vh; }
-    </style>
-  </head>
-  <body>
-    <!--
-      IMPORTANT: Replace "YOUR_GITHUB_RELEASE_WACZ_URL_HERE" below with the
-      URL you copied from your GitHub Release asset for 'freeze-nova-cloud.wacz'.
-    -->
-    <replay-web-page
-      source="freeze-nova-cloud.wacz">
-      <!-- Example: source="https://github.com/thistookwaytoolong/thistookwaytoolong.github.io/releases/download/v1.0-wacz/freeze-nova-cloud.wacz" -->
-    </replay-web-page>
+<html lang="en" class="h-full">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WACZ Replayer</title>
+    
+    <!-- 1. Load Tailwind CSS for styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- 2. Load the ReplayWeb.page UI library -->
+    <!-- This script defines the <replay-web-page> custom HTML element -->
+    <script type="module" src="https://cdn.jsdelivr.net/npm/replaywebpage/ui.js"></script>
 
-    <!-- This assumes ui.js is in the same directory as index.html -->
-    <script async src="ui.js"></script>
-  </body>
+</head>
+<body class="h-full flex flex-col bg-gray-900 text-gray-100 font-sans">
+
+    <!-- Header Section -->
+    <header class="bg-gray-800 shadow-lg z-10 flex-shrink-0">
+        <div class="container mx-auto px-4 py-3">
+            <h1 class="text-xl font-bold text-white">Web Archive Replay</h1>
+        </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <!-- The replay element will take up all remaining space -->
+    <main class="flex-grow relative bg-gray-700">
+        
+        <!-- 
+          3. The ReplayWeb.page custom element.
+          We remove the 'source' attribute to prevent auto-loading
+          with a relative path, which caused the error.
+          We add an 'id' so we can target it with JavaScript.
+        -->
+        <replay-web-page 
+            id="replay-ui"
+            class="h-full w-full">
+        </replay-web-page>
+
+    </main>
+
+    <!-- 
+      4. Add JavaScript to fix the "Invalid URL" error.
+      We manually resolve the relative path to a full, absolute URL
+      before giving it to the component.
+    -->
+    <script type="module">
+      try {
+        const replayElement = document.getElementById('replay-ui');
+        
+        // The relative path to the WACZ file
+        const relativePath = "/freeze-nova-cloud.wacz";
+
+        // Construct a full, absolute URL based on the document's location
+        // This fixes the "TypeError: Invalid URL"
+        const absoluteUrl = new URL(relativePath, window.location.href).href;
+
+        // Set the 'source' *property* of the element.
+        // The component will now load using the valid absolute URL.
+        replayElement.source = absoluteUrl;
+
+      } catch (e) {
+        console.error("Error setting up replayer:", e);
+        // Display a fallback error to the user
+        const replayElement = document.getElementById('replay-ui');
+        if (replayElement) {
+            replayElement.innerHTML = `<div class="p-4 text-red-400">Error: Could not construct URL for archive. ${e.message}</div>`;
+        }
+      }
+    </script>
+
+</body>
 </html>
 
