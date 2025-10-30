@@ -29,15 +29,16 @@
         <!-- 
           3. The ReplayWeb.page custom element.
           - Set 'source' to the relative path of the wacz file.
-          - Set 'sw-scope' to the current directory ('./').
-          - Set 'sw-name' to the path relative to the scope.
-            This configuration should resolve the CORS errors.
+          - Set 'sw-scope' to the root directory ('/').
+          - Set 'sw-name' to an absolute path from the root.
+            This is the most explicit way to set the paths and
+            should resolve the "Not Found" (text/html) error.
         -->
         <replay-web-page 
             id="replay-ui"
             source="./freeze-nova-cloud.wacz"
-            sw-scope="./"
-            sw-name="replay/sw.js"
+            sw-scope="/"
+            sw-name="/replay/sw.js"
             class="h-full w-full">
         </replay-web-page>
 
@@ -51,4 +52,5 @@
 
 </body>
 </html>
+
 
