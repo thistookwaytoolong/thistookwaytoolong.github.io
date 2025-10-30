@@ -29,16 +29,15 @@
         <!-- 
           3. The ReplayWeb.page custom element.
           - Set 'source' to the relative path of the wacz file.
-          - Set 'sw-scope' to the root directory ('/').
-          - Set 'sw-name' to an absolute path from the root.
-            This is the most explicit way to set the paths and
-            should resolve the "Not Found" (text/html) error.
+          - Set 'sw-name' to the relative path from the HTML file.
+          - Removed the 'sw-scope' attribute, as setting it to '/'
+            was causing the 404 (MIME type) error.
+            We will let the library determine the scope automatically.
         -->
         <replay-web-page 
             id="replay-ui"
             source="./freeze-nova-cloud.wacz"
-            sw-scope="/"
-            sw-name="/replay/sw.js"
+            sw-name="./replay/sw.js"
             class="h-full w-full">
         </replay-web-page>
 
@@ -52,5 +51,6 @@
 
 </body>
 </html>
+
 
 
