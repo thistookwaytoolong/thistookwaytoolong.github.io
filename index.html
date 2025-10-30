@@ -28,14 +28,16 @@
         
         <!-- 
           3. The ReplayWeb.page custom element.
-          - We set 'source' to the relative path of the wacz file.
-          - We add 'sw-name' to explicitly point to the service worker,
-            which should fix the 404 error.
+          - Set 'source' to the relative path of the wacz file.
+          - Set 'sw-scope' to the current directory ('./').
+          - Set 'sw-name' to the path relative to the scope.
+            This configuration should resolve the CORS errors.
         -->
         <replay-web-page 
             id="replay-ui"
             source="./freeze-nova-cloud.wacz"
-            sw-name="./replay/sw.js"
+            sw-scope="./"
+            sw-name="replay/sw.js"
             class="h-full w-full">
         </replay-web-page>
 
@@ -43,9 +45,8 @@
 
     <!-- 
       4. Removed the previous custom script.
-      The 'source' and 'sw-name' attributes are now set directly on
-      the <replay-web-page> element, which is the standard way
-      to configure it.
+      The attributes are now set directly on
+      the <replay-web-page> element.
     -->
 
 </body>
